@@ -1,1 +1,1 @@
-Code for my algorithms fror Yandex's tarining
+Code for my algorithms fror Yandex's training
