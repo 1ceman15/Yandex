@@ -26,6 +26,12 @@ public class SubstringEqualityV2 {
             int A = Integer.parseInt(helper[1])+1;
             int B = Integer.parseInt(helper[2])+1;
             boolean answer = ((array[A+size-1]+array[B-1]*degree[size])%remains) == ((array[B+size-1]+array[A-1]*degree[size])%remains);
+            //Изначально мы должны проверять другое выражение на равенство
+            //Но чтобы избавиться от отрицательных значений мы используем свойства уравнений
+            //Исходная формула:
+            //(array[A+size-1] - array[A-1]*degree[size]) %remains) ==
+            // == ((array[B+size-1] - array[B-1]*degree[size]) %remains)
+
             if(answer)
                 System.out.println("yes");
             else
