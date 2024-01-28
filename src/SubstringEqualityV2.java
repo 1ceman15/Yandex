@@ -2,6 +2,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+//При данном способе возможны ошибки, из-за коллизии
+
+//Используя полиномы
 public class SubstringEqualityV2 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -13,9 +16,9 @@ public class SubstringEqualityV2 {
         long[] degree = new long[str.length()];
 
         degree[0] = 1;
-        long remains = (int) Math.pow(10,9)+7;
+        long remains = (int) Math.pow(10,9)+7;//делитель
         long x = 257;
-
+        //Хеширование строки
         for (int i = 1; i < str.length(); i++) {
             degree[i] = (degree[i-1]*x)%remains;
             array[i] = (array[i-1] * x + (long) (str.charAt(i)) )%remains;
@@ -31,7 +34,6 @@ public class SubstringEqualityV2 {
             //Исходная формула:
             //(array[A+size-1] - array[A-1]*degree[size]) %remains) ==
             // == ((array[B+size-1] - array[B-1]*degree[size]) %remains)
-
             if(answer)
                 System.out.println("yes");
             else
