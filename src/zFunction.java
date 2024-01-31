@@ -24,34 +24,34 @@ public class zFunction {
             array[i] = (array[i - 1] * x + (long) (str.charAt(i))) % remains;
         }
         int[] answer = new int[str.length()];
-        //String out = "0 ";
         pw.print("0 ");
         for (int i = 1; i <= str.length() - 1; i++) {
-            int suffix = str.length() - 1;
             int suffixBeg = i;
-            int suffixLen = str.length() - i;
-            int prefix = suffixLen - 1;
-            int equal = suffixLen;
+            int length = 1;
+            int prefix = 0;
             boolean flag= true;
-            for (int j = equal; j>0; j--) {
-                boolean helper = (array[prefix] + array[suffixBeg - 1] * degree[equal]) % remains == array[suffix] % remains;
+            for (int j = i; j<=str.length()-1;j++) {
+                boolean helper = (array[prefix] + array[suffixBeg-1] * degree[length]) % remains == array[j] % remains;
                 if (helper) {
+                    prefix++;
+                    length++;
                     flag = false;
-                    //out += equal + " ";
-                    pw.print(equal+" ");
-                    break;
+                    continue;
                 }
-                equal--;
-                prefix--;
-                suffix--;
+                break;
             }
             if(flag) {
-                //out += "0 ";
                 pw.print("0 ");
             }
+            else
+                pw.print((length-1)+" ");
         }
 
         pw.flush();
 
     }
 }
+
+
+
+
