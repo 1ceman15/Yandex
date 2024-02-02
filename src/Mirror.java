@@ -1,47 +1,44 @@
 import java.io.*;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TreeSet;
-//Должно решаться за линейное время
-//попытаться убрать 1 из циклов
+
 
 public class Mirror {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
-        String[] trash = br.readLine().split(" ");
-        String[] strHelper = br.readLine().split(" ");
-        String str = "";
-        for (int i = 0; i < strHelper.length; i++) {
-            str= str+ (char) (int) Integer.parseInt(strHelper[i]);
-        }
+        String trash = br.readLine();
+        String[] str = br.readLine().split(" ");
+        //Использую отсортированное множество, чтобы избавиться от повторов
+        //и вывести элементы в порядке возрастания
         TreeSet<Integer> set = new TreeSet<>();
 
-        long[] array = new long[str.length()];
-        long[] degree = new long[str.length()];
-        long[] reverse = new long[str.length()];
-        int reverseIndex = str.length()-1;
+        long[] array = new long[str.length];
+        long[] degree = new long[str.length];
+        long[] reverse = new long[str.length];//массив, который хранит хеши перевернутой строки
+        int reverseIndex = str.length-1;
 
         degree[0] = 1;
         long remains = (int) Math.pow(10, 9) + 7;//делитель
         long x = 257;
 
-        array[0] = (long) str.charAt(0) % remains;
-        reverse[0] = (long) str.charAt(reverseIndex) % remains;
+        array[0] = Long.parseLong(str[0])%remains;
+        reverse[0] = Long.parseLong( str[reverseIndex]) % remains;
         reverseIndex--;
 
         //Хеширование строки и запись степеней x
-        for (int i = 1; i < str.length(); i++) {
+        //Так как вводные данные - числа, хеширование происходит сразу по ним
+        for (int i = 1; i < str.length; i++) {
             degree[i] = (degree[i - 1] * x) % remains;
-            array[i] = (array[i - 1] * x + (long) (str.charAt(i))) % remains;
-            reverse[i] = (reverse[i-1] * x + (long) ( str.charAt(reverseIndex) ) ) % remains;
+            array[i] = (array[i - 1] * x + Long.parseLong(str[i])) % remains;
+            reverse[i] = (reverse[i-1] * x + Long.parseLong(str[reverseIndex]) ) % remains;
             reverseIndex--;
         }
-
-        for (int i = 0; i < str.length()/2; i++) {
+        //идем до середины массива, так как, очевидно,
+        //что в зеркале не может отражаться меньше половины всех видимых элементов
+        for (int i = 0; i < str.length/2; i++) {
             int len = i+1;
-            reverseIndex = str.length() - len -1;
+            reverseIndex = str.length - len -1;
             int reverseLen = reverseIndex+1;
             int preI = i - len;
             long mirror = reverse[reverseIndex] % remains;
@@ -58,7 +55,8 @@ public class Mirror {
             }
 
         }
-        set.add(str.length());
+        //добавляем случай, когда зеркала нет, и все элементы настоящии
+        set.add(str.length);
 
 
         Iterator<Integer> iter = set.iterator();
