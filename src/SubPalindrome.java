@@ -51,7 +51,7 @@ public class SubPalindrome {
             int end = halfLen;
             int mid = end;
             halfLen = 0;
-            //когда start  и end равны, значит бинпоиск закончился
+            //когда start и end равны, значит бинпоиск закончился
             while (start <= end) {
                 //mid - длинна половины палиндрома
                 boolean helper = (array[firstHalf] + reverse[reverseEnd - 1] * degree[mid]) % remains
