@@ -27,9 +27,7 @@ public class QuickDijkstra {
         mas = Arrays.stream(br.readLine().split(" ")).mapToLong(Long::parseLong).toArray();
         int start = (int) mas[0];
         int finish = (int) mas[1];
-        
         br.close();
-
         //Под индексом 0 хранится вершина, а под индексом 1 расстояние до нее от начала
         PriorityQueue<long[]> priorityQueue = new PriorityQueue<>(Comparator.comparingLong(arr -> arr[1]));
 
