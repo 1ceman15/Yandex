@@ -49,19 +49,20 @@ public class QuickDijkstra {
             int now = (int) minimum(priorityQueue);
             if(now==Integer.MAX_VALUE || distance[now]==Long.MAX_VALUE)//Если now равен бесконечности, значит можно дальше не обрабатывать
                 break;
-            visit.remove(now);
-            HashMap<Long,Long> inner = map.get((long)now);
+            visit.remove(now);//Удаляем все посещенные вершины
+            HashMap<Long,Long> inner = map.get((long)now);//Внутренняя хеш-таблица
             long cost = distance[now];
-            if(inner == null)
+            if(inner == null)//Если она пуста, значит у вершины нет соседей
                 continue;
             for(Long x: inner.keySet()){
                 long newCost = cost + inner.get(x);
                 if(distance[x.intValue()]>newCost) {//Меняем длину пути, только если она меньше
                     //priorityQueue.remove(new long[]{now,distance[x.intValue()]});
+                    //С удалением элементов код работал слишком медленно, поэтому мы их оставляем
                     distance[x.intValue()] = newCost;
-                    priorityQueue.add(new long[]{x,distance[x.intValue()]});
+                    priorityQueue.add(new long[]{x,distance[x.intValue()]});//Добавляем сокращенный путь
                 }
-                if(now==finish)
+                if(now==finish)//Нет необходимости обрабатывать все вершины, нам нужно расстояние только между 2
                     break;
 
             }
@@ -74,7 +75,7 @@ public class QuickDijkstra {
 
 
     }
-    //Функция для нахождения непосещенной вершины с минимальным расстоянием(Возвращает индекс)
+    //Функция для нахождения не посещенной вершины с минимальным расстоянием(Возвращает индекс)
     static long minimum(PriorityQueue<long[]> priorityQueue){
         long[] mas =  priorityQueue.peek();//Хранит индекс вершины с минимальным путем до нее
         priorityQueue.remove(mas);
